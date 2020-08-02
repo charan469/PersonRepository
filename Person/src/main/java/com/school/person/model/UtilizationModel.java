@@ -10,6 +10,14 @@ public class UtilizationModel
 	private String updateDate;
 	private String status;
 	
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	private String message;
+	
 	public String getPersonId() {
 		return personId;
 	}

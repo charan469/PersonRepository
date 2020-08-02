@@ -33,8 +33,8 @@ public class UtilizationRepository
 			utilizationModel.setPersonId(rs.getString("PersonId"));
 			utilizationModel.setPersonMonth(rs.getString("PersonMonth"));
 			utilizationModel.setPersonYear(rs.getString("PersonYear"));
-			utilizationModel.setWaterUtilized(rs.getString("WaterUtilized"));
-			utilizationModel.setElectricityUtilized(rs.getString("ElectricityUtilized"));
+			utilizationModel.setWaterUtilized(rs.getString("WaterUtilized").trim());
+			utilizationModel.setElectricityUtilized(rs.getString("ElectricityUtilized").trim());
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			utilizationModel.setUpdateDate(df.format(rs.getDate("UpdateDate")));
 		    
@@ -45,12 +45,18 @@ public class UtilizationRepository
 	
 	public int insertUtilization(UtilizationModel utilizationModel)
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+	
+	
 		
 		int count=0;
 		try
 		{
-			Date updateDate = df.parse(utilizationModel.getUpdateDate());
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Date updateDate = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(updateDate));
+			//Date updateDate = df.parse(utilizationModel.getUpdateDate());
 			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized, UpdateDate)" + "VALUES(?, ?, ?, ?, ?, ?)",
 					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), updateDate});
 		}
@@ -106,9 +112,9 @@ public class UtilizationRepository
 		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=?", new Object[] {utilizationModel.getPersonId()}, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class)));
 	}
 
-	public List<UtilizationModel> getAll() 
+	public List<UtilizationModel> getAll(UtilizationModel utilizationModel) 
 	{
-		return jdbcTemplate.query("SELECT * FROM Utilization", new UtilizationRowMapper());
+		return jdbcTemplate.query("SELECT * FROM Utilization WHERE PersonId=? ORDER BY PersonMonth ASC ", new Object[] {utilizationModel.getPersonId()}, new UtilizationRowMapper());
 	}
 
 	

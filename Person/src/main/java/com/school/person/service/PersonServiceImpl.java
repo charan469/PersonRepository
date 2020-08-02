@@ -28,13 +28,16 @@ public class PersonServiceImpl implements PersonService {
 				personModel.setPersonSection(null);
 			}
 
-			personModel.setStatus(Constants.SUCCESS);
+			personModel.setStatus(Constants.REGISTER_SUCCESS);
+			personModel.setMessage(Constants.REGISTER_SUCCESS_MSG);
 		} else if (count == -1) {
-			personModel.setStatus(Constants.DUPLICATE);
+			personModel.setStatus(Constants.DUPLICATE_REGISTER);
+			personModel.setMessage(Constants.DUPLICATE_REGISTER_MSG);
 		}
 
 		else {
-			personModel.setStatus(Constants.FAILED);
+			personModel.setStatus(Constants.REGISTER_FAILED);
+			personModel.setMessage(Constants.REGISTER_FAILED_MSG);
 		}
 		return personModel;
 	}

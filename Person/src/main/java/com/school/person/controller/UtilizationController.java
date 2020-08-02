@@ -29,10 +29,11 @@ public class UtilizationController
 		return "Hello";
 	}
 	
-	@GetMapping(path="/get")
-	public List<UtilizationModel> getAll()
+	@PostMapping(path="/get")
+	public List<UtilizationModel> getAll(@RequestBody final UtilizationModel utilizationModel)
 	{
-		return utilizationService.getAll();
+		System.out.println("getController " + utilizationModel.getPersonId());
+		return utilizationService.getAll(utilizationModel);
 	} 
 	
 	@PostMapping(path="/find")

@@ -8,7 +8,7 @@ import com.school.person.model.UtilizationModel;
 public interface UtilizationService 
 {
 
-	List<UtilizationModel> getAll();
+	List<UtilizationModel> getAll(UtilizationModel utilizationModel);
 
 	Optional<UtilizationModel> findUtilization(UtilizationModel utilizationModel);
 

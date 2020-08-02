@@ -1,5 +1,7 @@
 package com.school.person.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,20 +22,29 @@ public class UtilizationServiceImpl implements UtilizationService
 	public UtilizationModel insertUtilization(UtilizationModel utilizationModel)
 	{
 		
+//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//		Date date = new Date(System.currentTimeMillis());
+//		System.out.println(formatter.format(date));
+//		utilizationModel.setUpdateDate(formatter.format(date));
+		
 		int count = 0;
 		count = utilizationRepository.insertUtilization(utilizationModel);
 		
 		if(count > 0)
 		{
-			utilizationModel.setStatus(Constants.SUCCESS);
+			utilizationModel.setStatus(Constants.UPDATE_SUCCESS);
+			utilizationModel.setMessage(Constants.UPDATE_SUCCESS_MSG);
 		}
 		else if(count==-1)
 		{
 			utilizationModel.setStatus(Constants.DUPLICATE);
+			utilizationModel.setMessage(Constants.UTILIZATION_DUPLICATE_MSG);
 		}
 		else
 		{
-			utilizationModel.setStatus(Constants.FAILED);
+			utilizationModel.setStatus(Constants.UPDATE_FAILED);
+			utilizationModel.setMessage(Constants.UPDATE_FAILED_MSG);
+			
 		}
 		return utilizationModel;
 	}
@@ -91,9 +102,9 @@ public class UtilizationServiceImpl implements UtilizationService
 	}
 	
 	@Override
-	public List<UtilizationModel> getAll()
+	public List<UtilizationModel> getAll(UtilizationModel utilizationModel)
 	{
-		return utilizationRepository.getAll();
+		return utilizationRepository.getAll(utilizationModel);
 		
 	}
 
