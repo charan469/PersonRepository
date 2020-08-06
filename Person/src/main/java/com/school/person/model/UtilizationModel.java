@@ -3,12 +3,14 @@ package com.school.person.model;
 public class UtilizationModel 
 {
 	private String personId;
-	private String personMonth;
-	private String personYear;
-	private String waterUtilized;
-	private String electricityUtilized;
+	private int personMonth;
+	private int personYear;
+	private int waterUtilized;
+	private int electricityUtilized;
 	private String updateDate;
 	private String status;
+	private String message;
+	
 	
 	public String getMessage() {
 		return message;
@@ -16,37 +18,41 @@ public class UtilizationModel
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	private String message;
-	
 	public String getPersonId() {
 		return personId;
 	}
 	public void setPersonId(String personId) {
 		this.personId = personId;
 	}
-	public String getPersonMonth() {
+	public int getPersonMonth() {
 		return personMonth;
 	}
-	public void setPersonMonth(String personMonth) {
+	public void setPersonMonth(int personMonth) {
 		this.personMonth = personMonth;
 	}
-	public String getPersonYear() {
+	public int getPersonYear() {
 		return personYear;
 	}
-	public void setPersonYear(String personYear) {
+	public void setPersonYear(int personYear) {
 		this.personYear = personYear;
 	}
-	public String getWaterUtilized() {
+	public int getWaterUtilized() {
 		return waterUtilized;
 	}
-	public void setWaterUtilized(String waterUtilized) {
+	public void setWaterUtilized(int waterUtilized) {
 		this.waterUtilized = waterUtilized;
 	}
-	public String getElectricityUtilized() {
+	public int getElectricityUtilized() {
 		return electricityUtilized;
 	}
-	public void setElectricityUtilized(String electricityUtilized) {
+	public void setElectricityUtilized(int electricityUtilized) {
 		this.electricityUtilized = electricityUtilized;
+	}
+	public String getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(String updateDate) {
+		this.updateDate = updateDate;
 	}
 	public String getStatus() {
 		return status;
@@ -54,14 +60,6 @@ public class UtilizationModel
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getUpdateDate() {
-		return updateDate;
-	}
-	public void setUpdateDate(String string) {
-		this.updateDate = string;
-	}
-	
-	
 	
 	
 	

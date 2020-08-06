@@ -31,10 +31,10 @@ public class UtilizationRepository
 			UtilizationModel utilizationModel = new UtilizationModel();
 			
 			utilizationModel.setPersonId(rs.getString("PersonId"));
-			utilizationModel.setPersonMonth(rs.getString("PersonMonth"));
-			utilizationModel.setPersonYear(rs.getString("PersonYear"));
-			utilizationModel.setWaterUtilized(rs.getString("WaterUtilized").trim());
-			utilizationModel.setElectricityUtilized(rs.getString("ElectricityUtilized").trim());
+			utilizationModel.setPersonMonth(rs.getInt("PersonMonth"));
+			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
+			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
+			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
 			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			utilizationModel.setUpdateDate(df.format(rs.getDate("UpdateDate")));
 		    
