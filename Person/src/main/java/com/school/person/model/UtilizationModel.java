@@ -10,7 +10,7 @@ public class UtilizationModel
 	private String updateDate;
 	private String status;
 	private String message;
-	
+	//check
 	
 	public String getMessage() {
 		return message;
