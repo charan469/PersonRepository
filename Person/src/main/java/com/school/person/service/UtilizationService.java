@@ -17,6 +17,8 @@ public interface UtilizationService
 	UtilizationModel deleteUtilization(UtilizationModel utilizationModel);
 
 	UtilizationModel updateUtilization(UtilizationModel utilizationModel);
+	
+	Optional<UtilizationModel> findByMonthYearUtilization(UtilizationModel utilizationModel);
 
 }
 

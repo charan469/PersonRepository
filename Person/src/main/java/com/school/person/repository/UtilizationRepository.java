@@ -95,8 +95,8 @@ public class UtilizationRepository
 		try
 		{
 			Date updateDate = df.parse(utilizationModel.getUpdateDate());
-			count = jdbcTemplate.update("UPDATE Utilization SET PersonMonth=?, PersonYear=?, WaterUtilized=?, ElectricityUtilized=?, UpdateDate=? WHERE PersonId=?", 
-					new Object[] {utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), updateDate, utilizationModel.getPersonId()});
+			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, UpdateDate=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
+					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), updateDate, utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
 		}
 		catch(Exception ex)
 		{
@@ -115,6 +115,12 @@ public class UtilizationRepository
 	public List<UtilizationModel> getAll(UtilizationModel utilizationModel) 
 	{
 		return jdbcTemplate.query("SELECT * FROM Utilization WHERE PersonId=? ORDER BY PersonMonth ASC ", new Object[] {utilizationModel.getPersonId()}, new UtilizationRowMapper());
+	}
+	
+	public Optional<UtilizationModel> findByMonthYearUtilization(UtilizationModel utilizationModel) 
+	{
+		
+		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear() }, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class)));
 	}
 
 	
