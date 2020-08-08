@@ -60,7 +60,7 @@ public class UtilizationController
 	    return utilizationService.updateUtilization(utilizationModel);
 	}
 	
-	@PostMapping(path="/find")
+	@PostMapping(path="/findByMonthYear")
 	public Optional<UtilizationModel> findByMonthYear(@RequestBody final UtilizationModel utilizationModel)
 	{
 	    return utilizationService.findByMonthYearUtilization(utilizationModel);
