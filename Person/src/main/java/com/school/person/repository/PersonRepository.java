@@ -2,6 +2,9 @@ package com.school.person.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,7 @@ public class PersonRepository
 		@Override
 		public PersonModel mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			PersonModel personModel = new PersonModel();
 			
 			personModel.setPersonId(rs.getString("PersonId"));
@@ -38,6 +42,8 @@ public class PersonRepository
 			personModel.setGender(rs.getString("Gender"));
 			personModel.setPersonStatus(rs.getString("PersonStatus"));
 			personModel.setJobType(rs.getString("JobType"));
+			personModel.setCreateDateTime(df.format(rs.getDate("CreateDateTime")));
+			personModel.setLastModifiedDateTime(df.format(rs.getDate("LastModifiedDateTime")));
 			
 			return personModel;
 			
@@ -48,11 +54,19 @@ public class PersonRepository
 	{
 	
 		int count = 0;
-		System.out.println("InsertPersonRepo" + personModel.getPersonId());
+		//System.out.println("InsertPersonRepo" + personModel.getPersonId());
 		try
 		{
-			count = jdbcTemplate.update("INSERT INTO Person(PersonId, PersonName, PersonEmail, PersonPassword, Grade, PersonSection, Gender, PersonStatus, JobType)"+"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType()});
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			Date createDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(createDateTime));
+			
+			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(lastModifiedDateTime));
+			
+			count = jdbcTemplate.update("INSERT INTO Person(PersonId, PersonName, PersonEmail, PersonPassword, Grade, PersonSection, Gender, PersonStatus, JobType, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), createDateTime, lastModifiedDateTime});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -90,8 +104,16 @@ public class PersonRepository
 		int count=0;
 		try
 		{
-			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=? WHERE PersonId=? ", 
-					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), personModel.getPersonId()});
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				
+			Date createDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(createDateTime));
+				
+			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(lastModifiedDateTime));
+			
+			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=?, CreateDateTime=?, LastModifiedDateTime=? WHERE PersonId=?", 
+					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), createDateTime, lastModifiedDateTime, personModel.getPersonId()});
 		}
 		catch(Exception ex)
 		{
@@ -112,21 +134,21 @@ public class PersonRepository
 	   
 		PersonModel optional =null;
 			
-		try {
+		try 
+		{
 			optional = jdbcTemplate.queryForObject("SELECT PersonId,PersonPassword FROM Person WHERE PersonId=?", new Object[] {personModel.getPersonId()}, new BeanPropertyRowMapper<PersonModel>(PersonModel.class));
 		} 
-		catch (EmptyResultDataAccessException  ed) {
-			
+		catch (EmptyResultDataAccessException  ed) 
+		{
 			ed.printStackTrace();
 			return null;
 		}
-		
-		
-		catch (DataAccessException e) {
-			// TODO Auto-generated catch block
+		catch (DataAccessException e) 
+		{
 			e.printStackTrace();
 			return null;
 		}
+		
 		return optional;
 
 	

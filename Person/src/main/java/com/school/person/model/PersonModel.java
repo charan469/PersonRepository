@@ -10,17 +10,13 @@ public class PersonModel
 	private String personSection;
 	private String gender;
 	private String personStatus;
-	private String jobType;	
+	private String jobType;
+	private String createDateTime;
+	private String lastModifiedDateTime;
 	private String status;
 	private String message;
 	
 	
-	public String getMessage() {
-		return message;
-	}
-	public void setMessage(String message) {
-		this.message = message;
-	}
 	public String getPersonId() {
 		return personId;
 	}
@@ -75,11 +71,29 @@ public class PersonModel
 	public void setJobType(String jobType) {
 		this.jobType = jobType;
 	}
+	public String getCreateDateTime() {
+		return createDateTime;
+	}
+	public void setCreateDateTime(String createDateTime) {
+		this.createDateTime = createDateTime;
+	}
+	public String getLastModifiedDateTime() {
+		return lastModifiedDateTime;
+	}
+	public void setLastModifiedDateTime(String lastModifiedDateTime) {
+		this.lastModifiedDateTime = lastModifiedDateTime;
+	}
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	

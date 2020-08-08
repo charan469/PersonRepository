@@ -28,6 +28,7 @@ public class UtilizationRepository
 		@Override
 		public UtilizationModel mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			UtilizationModel utilizationModel = new UtilizationModel();
 			
 			utilizationModel.setPersonId(rs.getString("PersonId"));
@@ -35,8 +36,8 @@ public class UtilizationRepository
 			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
 			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
 			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
-			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-			utilizationModel.setUpdateDate(df.format(rs.getDate("UpdateDate")));
+			utilizationModel.setCreateDateTime(df.format(rs.getDate("CreateDateTime")));
+			utilizationModel.setLastModifiedDateTime(df.format(rs.getDate("LastModifiedDateTime")));
 		    
 			return utilizationModel;
 			
@@ -45,20 +46,19 @@ public class UtilizationRepository
 	
 	public int insertUtilization(UtilizationModel utilizationModel)
 	{
-		//DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-
-	
-	
-		
 		int count=0;
 		try
 		{
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			Date updateDate = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(updateDate));
-			//Date updateDate = df.parse(utilizationModel.getUpdateDate());
-			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized, UpdateDate)" + "VALUES(?, ?, ?, ?, ?, ?)",
-					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), updateDate});
+			
+			Date createDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(createDateTime));
+			
+			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(lastModifiedDateTime));
+			
+			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?)",
+					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), createDateTime, lastModifiedDateTime});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -90,13 +90,20 @@ public class UtilizationRepository
 	
 	public int updateUtilization(UtilizationModel utilizationModel) 
 	{
-		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		int count=0;
 		try
 		{
-			Date updateDate = df.parse(utilizationModel.getUpdateDate());
-			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, UpdateDate=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
-					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), updateDate, utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
+			//Date updateDate = df.parse(utilizationModel.getUpdateDate());
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			Date createDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(createDateTime));
+			
+			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			System.out.println(formatter.format(lastModifiedDateTime));
+			
+			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, CreateDateTime=?, LastModifiedDateTime=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
+					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(), createDateTime, lastModifiedDateTime, utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
 		}
 		catch(Exception ex)
 		{
@@ -108,7 +115,6 @@ public class UtilizationRepository
 
 	public Optional<UtilizationModel> findUtilization(UtilizationModel utilizationModel) 
 	{
-		
 		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=?", new Object[] {utilizationModel.getPersonId()}, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class)));
 	}
 
@@ -119,10 +125,8 @@ public class UtilizationRepository
 	
 	public Optional<UtilizationModel> findByMonthYearUtilization(UtilizationModel utilizationModel) 
 	{
-		
 		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear() }, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class)));
 	}
 
 	
-
 }
