@@ -17,6 +17,9 @@ public class UtilizationServiceImpl implements UtilizationService
 {
 	@Autowired                                                                            
 	UtilizationRepository utilizationRepository;                 
+	@Autowired
+	ThresholdService thresholdService;
+	
 	
 	@Override
 	public UtilizationModel insertUtilization(UtilizationModel utilizationModel)
@@ -28,6 +31,7 @@ public class UtilizationServiceImpl implements UtilizationService
 //		utilizationModel.setUpdateDate(formatter.format(date));
 		
 		int count = 0;
+		utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
 		count = utilizationRepository.insertUtilization(utilizationModel);
 		
 		if(count > 0)
@@ -86,6 +90,7 @@ public class UtilizationServiceImpl implements UtilizationService
 		
 		try
 		{
+			utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
 			count = utilizationRepository.updateUtilization(utilizationModel);
 			if(count > 0)
 			{

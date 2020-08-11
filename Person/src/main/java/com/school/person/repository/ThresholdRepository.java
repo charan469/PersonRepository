@@ -37,9 +37,9 @@ public class ThresholdRepository {
 	
 	
 	
-	public Optional<ThresholdModel> findThreshold(ThresholdModel thresholdModel)
+	public ThresholdModel findThreshold()
 	{
-		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Threshold ", new Object[] {}, new BeanPropertyRowMapper<ThresholdModel>(ThresholdModel.class)));
+		return jdbcTemplate.queryForObject("SELECT * FROM Threshold ", new Object[] {}, new BeanPropertyRowMapper<ThresholdModel>(ThresholdModel.class));
 	}
 	
 

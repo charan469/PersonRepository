@@ -24,4 +24,8 @@ public class Constants
 	public static final String REGISTER_FAILED = "STS009";
 	public static final String REGISTER_FAILED_MSG = "Register Failed";
 	public static final String ACTIVE = "ACTIVE";
+	public static final String GREEN_ZONE = "GREEN";
+	public static final String AMBER_ZONE = "AMBER";
+	public static final String RED_ZONE = "RED";
+	
 }

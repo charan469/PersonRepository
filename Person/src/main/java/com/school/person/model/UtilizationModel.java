@@ -7,6 +7,7 @@ public class UtilizationModel
 	private int personYear;
 	private int waterUtilized;
 	private int electricityUtilized;
+	private String personZone;
 	private String createDateTime;
 	private String lastModifiedDateTime;
 	private String status;
@@ -66,6 +67,12 @@ public class UtilizationModel
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public String getPersonZone() {
+		return personZone;
+	}
+	public void setPersonZone(String personZone) {
+		this.personZone = personZone;
 	}
 	
 
