@@ -23,5 +23,5 @@ public class Constants
 	public static final String REGISTER_SUCCESS_MSG = "Register Successful";
 	public static final String REGISTER_FAILED = "STS009";
 	public static final String REGISTER_FAILED_MSG = "Register Failed";
-	
+	public static final String ACTIVE = "ACTIVE";
 }

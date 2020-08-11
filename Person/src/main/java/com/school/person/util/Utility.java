@@ -1,6 +1,7 @@
 package com.school.person.util;
 
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -436,5 +437,21 @@ public class Utility {
 			return returnTime;
 		
 	}
+	
+	public final static String setDateFormat(java.sql.Date argDate) {
+		
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		
+		return df.format(argDate);
+		
 
+}
+	public final static java.util.Date getCurrentDateTime(){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentDateTime = new Date(System.currentTimeMillis());
+		return currentDateTime ;
+		
+	}
+	
 }

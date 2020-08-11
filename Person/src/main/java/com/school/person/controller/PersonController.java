@@ -42,7 +42,7 @@ public class PersonController
     }
     
     @PostMapping(path="/find")
-    public Optional<PersonModel> find(@RequestBody final PersonModel personModel)
+    public PersonModel find(@RequestBody final PersonModel personModel)
     {
     	return personService.findPerson(personModel);
     }

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.school.person.model.PersonModel;
 import com.school.person.repository.PersonRepository;
 import com.school.person.util.Constants;
+import com.school.person.util.Utility;
 
 @org.springframework.stereotype.Service
 public class PersonServiceImpl implements PersonService {
@@ -20,6 +21,7 @@ public class PersonServiceImpl implements PersonService {
 
 		System.out.println("InsertPerson" + personModel.getPersonId());
 		int count = 0;
+		personModel.setPersonStatus(Constants.ACTIVE);
 		count = personRepository.insertPerson(personModel);
 
 		if (count > 0) {
@@ -30,6 +32,7 @@ public class PersonServiceImpl implements PersonService {
 
 			personModel.setStatus(Constants.REGISTER_SUCCESS);
 			personModel.setMessage(Constants.REGISTER_SUCCESS_MSG);
+			
 		} else if (count == -1) {
 			personModel.setStatus(Constants.DUPLICATE_REGISTER);
 			personModel.setMessage(Constants.DUPLICATE_REGISTER_MSG);
@@ -79,8 +82,13 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public Optional<PersonModel> findPerson(PersonModel personModel) {
-		return personRepository.find(personModel);
+	public PersonModel findPerson(PersonModel personModel) {
+		PersonModel optional = null;
+		optional = personRepository.find(personModel);
+		optional.setPersonSection(Utility.trim(optional.getPersonSection()));
+		optional.setGender(Utility.trim(optional.getGender()));
+		optional.setJobType(Utility.trim(optional.getJobType()));
+		return optional;
 
 	}
 

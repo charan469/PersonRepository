@@ -10,7 +10,7 @@ public interface PersonService
 
 	List<PersonModel> getAll();
 
-	Optional<PersonModel> findPerson(PersonModel personModel);
+	PersonModel findPerson(PersonModel personModel);
 	
 	PersonModel loginPerson(PersonModel personModel);
 

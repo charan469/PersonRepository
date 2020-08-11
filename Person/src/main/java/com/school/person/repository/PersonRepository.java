@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.school.person.model.PersonModel;
+import com.school.person.util.Utility;
 
 @Repository
 public class PersonRepository 
@@ -30,7 +31,7 @@ public class PersonRepository
 		@Override
 		public PersonModel mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
-			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			//DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			PersonModel personModel = new PersonModel();
 			
 			personModel.setPersonId(rs.getString("PersonId"));
@@ -42,8 +43,8 @@ public class PersonRepository
 			personModel.setGender(rs.getString("Gender"));
 			personModel.setPersonStatus(rs.getString("PersonStatus"));
 			personModel.setJobType(rs.getString("JobType"));
-			personModel.setCreateDateTime(df.format(rs.getDate("CreateDateTime")));
-			personModel.setLastModifiedDateTime(df.format(rs.getDate("LastModifiedDateTime")));
+			personModel.setCreateDateTime(Utility.setDateFormat(rs.getDate("CreateDateTime")));
+			personModel.setLastModifiedDateTime(Utility.setDateFormat(rs.getDate("LastModifiedDateTime")));
 			
 			return personModel;
 			
@@ -57,16 +58,16 @@ public class PersonRepository
 		//System.out.println("InsertPersonRepo" + personModel.getPersonId());
 		try
 		{
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
-			Date createDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(createDateTime));
+		//	Date createDateTime = new Date(System.currentTimeMillis());
+			//System.out.println(formatter.format(createDateTime));
 			
-			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(lastModifiedDateTime));
+			//Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			//System.out.println(formatter.format(lastModifiedDateTime));
 			
 			count = jdbcTemplate.update("INSERT INTO Person(PersonId, PersonName, PersonEmail, PersonPassword, Grade, PersonSection, Gender, PersonStatus, JobType, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), createDateTime, lastModifiedDateTime});
+					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -104,16 +105,16 @@ public class PersonRepository
 		int count=0;
 		try
 		{
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			//SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				
-			Date createDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(createDateTime));
+			//Date createDateTime = new Date(System.currentTimeMillis());
+			//System.out.println(formatter.format(createDateTime));
 				
-			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(lastModifiedDateTime));
+			//Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+			///System.out.println(formatter.format(lastModifiedDateTime));
 			
-			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=?, CreateDateTime=?, LastModifiedDateTime=? WHERE PersonId=?", 
-					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), createDateTime, lastModifiedDateTime, personModel.getPersonId()});
+			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=?, LastModifiedDateTime=? WHERE PersonId=?", 
+					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), personModel.getPersonId()});
 		}
 		catch(Exception ex)
 		{
@@ -123,9 +124,9 @@ public class PersonRepository
 		return count;
 	}
 
-	public Optional<PersonModel> find(PersonModel personModel) 
+	public PersonModel find(PersonModel personModel) 
 	{
-		return Optional.of(jdbcTemplate.queryForObject("SELECT * FROM Person WHERE PersonId=?", new Object[] {personModel.getPersonId()}, new BeanPropertyRowMapper<PersonModel>(PersonModel.class)));
+		return jdbcTemplate.queryForObject("SELECT * FROM Person WHERE PersonId=?", new Object[] {personModel.getPersonId()}, new BeanPropertyRowMapper<PersonModel>(PersonModel.class));
 	}
 	
 	public PersonModel login(PersonModel personModel) 
@@ -136,7 +137,7 @@ public class PersonRepository
 			
 		try 
 		{
-			optional = jdbcTemplate.queryForObject("SELECT PersonId,PersonPassword FROM Person WHERE PersonId=?", new Object[] {personModel.getPersonId()}, new BeanPropertyRowMapper<PersonModel>(PersonModel.class));
+			optional = jdbcTemplate.queryForObject("SELECT PersonId,PersonPassword FROM Person WHERE PersonId=? AND PersonStatus = 'ACTIVE' ", new Object[] {personModel.getPersonId()}, new BeanPropertyRowMapper<PersonModel>(PersonModel.class));
 		} 
 		catch (EmptyResultDataAccessException  ed) 
 		{
