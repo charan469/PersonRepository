@@ -37,7 +37,7 @@ public class UtilizationController
 	} 
 	
 	@PostMapping(path="/find")
-	public Optional<UtilizationModel> find(@RequestBody final UtilizationModel utilizationModel)
+	public UtilizationModel find(@RequestBody final UtilizationModel utilizationModel)
 	{
 	    return utilizationService.findUtilization(utilizationModel);
 	}
@@ -61,7 +61,7 @@ public class UtilizationController
 	}
 	
 	@PostMapping(path="/findByMonthYear")
-	public Optional<UtilizationModel> findByMonthYear(@RequestBody final UtilizationModel utilizationModel)
+	public UtilizationModel findByMonthYear(@RequestBody final UtilizationModel utilizationModel)
 	{
 	    return utilizationService.findByMonthYearUtilization(utilizationModel);
 	}

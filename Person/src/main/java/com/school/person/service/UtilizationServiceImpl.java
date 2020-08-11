@@ -41,7 +41,7 @@ public class UtilizationServiceImpl implements UtilizationService
 		}
 		else if(count==-1)
 		{
-			// Incase of existing record do not give duplicate message instead override the existing record
+			// In case of existing record do not give duplicate message instead override the existing record
 			count = utilizationRepository.updateUtilization(utilizationModel);
 			if(count > 0)
 			{
@@ -111,24 +111,21 @@ public class UtilizationServiceImpl implements UtilizationService
 	}
 	
 	@Override
-	public Optional<UtilizationModel> findUtilization(UtilizationModel utilizationModel)
+	public UtilizationModel findUtilization(UtilizationModel utilizationModel)
 	{
 		return utilizationRepository.findUtilization(utilizationModel);
-		
 	}
 	
 	@Override
 	public List<UtilizationModel> getAll(UtilizationModel utilizationModel)
 	{
 		return utilizationRepository.getAll(utilizationModel);
-		
 	}
 	
 	@Override
-	public Optional<UtilizationModel> findByMonthYearUtilization(UtilizationModel utilizationModel)
+	public UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel)
 	{
 		return utilizationRepository.findByMonthYearUtilization(utilizationModel);
-		
 	}
 
 }
