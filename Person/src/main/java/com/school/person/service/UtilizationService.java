@@ -10,7 +10,7 @@ public interface UtilizationService
 
 	List<UtilizationModel> getAll(UtilizationModel utilizationModel);
 
-	Optional<UtilizationModel> findUtilization(UtilizationModel utilizationModel);
+	UtilizationModel findUtilization(UtilizationModel utilizationModel);
 
 	UtilizationModel insertUtilization(UtilizationModel utilizationModel);
 
@@ -18,7 +18,7 @@ public interface UtilizationService
 
 	UtilizationModel updateUtilization(UtilizationModel utilizationModel);
 	
-	Optional<UtilizationModel> findByMonthYearUtilization(UtilizationModel utilizationModel);
+	UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel);
 
 }
 

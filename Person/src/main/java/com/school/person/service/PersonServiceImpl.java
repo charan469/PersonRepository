@@ -63,6 +63,7 @@ public class PersonServiceImpl implements PersonService {
 	public PersonModel updatePerson(PersonModel personModel) {
 
 		int count = 0;
+		personModel.setPersonStatus(Constants.ACTIVE);
 
 		try {
 			count = personRepository.update(personModel);
@@ -85,6 +86,7 @@ public class PersonServiceImpl implements PersonService {
 	public PersonModel findPerson(PersonModel personModel) {
 		PersonModel optional = null;
 		optional = personRepository.find(personModel);
+		optional.setGrade(Utility.trim(optional.getGrade()));
 		optional.setPersonSection(Utility.trim(optional.getPersonSection()));
 		optional.setGender(Utility.trim(optional.getGender()));
 		optional.setJobType(Utility.trim(optional.getJobType()));

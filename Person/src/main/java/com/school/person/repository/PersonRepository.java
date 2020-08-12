@@ -31,7 +31,6 @@ public class PersonRepository
 		@Override
 		public PersonModel mapRow(ResultSet rs, int rowNum) throws SQLException
 		{
-			//DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 			PersonModel personModel = new PersonModel();
 			
 			personModel.setPersonId(rs.getString("PersonId"));
@@ -60,7 +59,7 @@ public class PersonRepository
 		{
             //SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
-		//	Date createDateTime = new Date(System.currentTimeMillis());
+		    //Date createDateTime = new Date(System.currentTimeMillis());
 			//System.out.println(formatter.format(createDateTime));
 			
 			//Date lastModifiedDateTime = new Date(System.currentTimeMillis());
