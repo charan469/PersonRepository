@@ -31,6 +31,8 @@ public class UtilizationServiceImpl implements UtilizationService
 //		utilizationModel.setUpdateDate(formatter.format(date));
 		
 		int count = 0;
+//		String finalZone = thresholdService.findThreshold(utilizationModel);
+//		utilizationModel.setPersonZone(finalZone);
 		utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
 		count = utilizationRepository.insertUtilization(utilizationModel);
 		

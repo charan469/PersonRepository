@@ -16,6 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.school.person.model.UtilizationModel;
+import com.school.person.util.Utility;
 
 @Repository
 public class UtilizationRepository 
@@ -50,16 +51,16 @@ public class UtilizationRepository
 		int count=0;
 		try
 		{
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			
+//			Date createDateTime = new Date(System.currentTimeMillis());
+//			System.out.println(formatter.format(createDateTime));
+//			
+//			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+//			System.out.println(formatter.format(lastModifiedDateTime));
 			
-			Date createDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(createDateTime));
-			
-			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(lastModifiedDateTime));
-			
-			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized,PersoZone, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
-					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), createDateTime, lastModifiedDateTime});
+			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized,PersonZone, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -95,16 +96,16 @@ public class UtilizationRepository
 		try
 		{
 			//Date updateDate = df.parse(utilizationModel.getUpdateDate());
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			
-			Date createDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(createDateTime));
-			
-			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
-			System.out.println(formatter.format(lastModifiedDateTime));
+//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//			
+//			Date createDateTime = new Date(System.currentTimeMillis());
+//			System.out.println(formatter.format(createDateTime));
+//			
+//			Date lastModifiedDateTime = new Date(System.currentTimeMillis());
+//			System.out.println(formatter.format(lastModifiedDateTime));
 			
 			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, PersonZone = ?, LastModifiedDateTime=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
-					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), lastModifiedDateTime, utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
+					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), Utility.getCurrentDateTime(), utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
 		}
 		catch(Exception ex)
 		{
