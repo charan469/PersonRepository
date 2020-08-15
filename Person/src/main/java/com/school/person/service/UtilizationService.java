@@ -20,5 +20,7 @@ public interface UtilizationService
 	
 	UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel);
 
+	List<UtilizationModel> findByGradeUtilization(UtilizationModel utilizationModel);
+
 }
 

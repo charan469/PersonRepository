@@ -130,5 +130,18 @@ public class UtilizationServiceImpl implements UtilizationService
 	{ 
 		return utilizationRepository.findByMonthYearUtilization(utilizationModel);
 	}
-
+	@Override
+	public List<UtilizationModel> findByGradeUtilization(UtilizationModel utilizationModel) 
+	{
+		List<UtilizationModel> optional = utilizationRepository.findByGradeUtilization(utilizationModel);
+		for(int i = 0; i <=optional.size()-1; i++) {
+			optional.get(i).setPersonZone(thresholdService.findThreshold(optional.get(i)));
+					
+			optional.get(i).setZone(thresholdService.findZone(optional.get(i).getPersonZone()));
+		}
+		
+		
+		return optional;
+	}
+	
 }

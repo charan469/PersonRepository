@@ -48,7 +48,16 @@ update Utilization set WaterUtilized = 400 WHERE PersonMonth = '08';
 update Utilization set WaterUtilized = 450 WHERE PersonMonth = '05';
 update Utilization set WaterUtilized = 320 WHERE PersonMonth = '04';
 
-ALTER table Utilization add column Zone int;
+SELECT a.*, b.* FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId ORDER BY a.PersonMonth;
+
+SELECT floor (avg(a.WaterUtilized)), floor (avg(a.ElectricityUtilized)), a.PersonMonth, a.PersonYear, b.Grade  
+FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = 'GR12'
+GROUP BY b.Grade, a.PersonMonth, a.PersonYear
+ORDER BY a.PersonMonth;
+
+
+
+--ALTER table Utilization
 --drop table Utilization
 
 CREATE TABLE Threshold

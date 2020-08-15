@@ -66,4 +66,8 @@ public class UtilizationController
 	    return utilizationService.findByMonthYearUtilization(utilizationModel);
 	}
 
+	@PostMapping(path="/findByGradeUtilization")
+	public List<UtilizationModel> findByGradeUtilization(@RequestBody final UtilizationModel utilizationModel) {
+		return utilizationService.findByGradeUtilization(utilizationModel);
+	}
 }

@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.school.person.model.PersonModel;
 import com.school.person.model.UtilizationModel;
 import com.school.person.util.Utility;
 
@@ -23,6 +24,10 @@ public class UtilizationRepository
 {
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+	@Autowired
+	PersonRepository personRepository;
+	
+
 	
 	public class UtilizationRowMapper implements RowMapper<UtilizationModel>
 	{
@@ -48,6 +53,29 @@ public class UtilizationRepository
 			
 		}
 	}
+	
+	public class GradeUtilizationRowMapper implements RowMapper<UtilizationModel>
+	{
+		@Override
+		public UtilizationModel mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			//DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			UtilizationModel utilizationModel = new UtilizationModel();
+			
+			
+			utilizationModel.setPersonMonth(rs.getInt("PersonMonth"));
+			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
+			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
+			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
+			//utilizationModel.setZone(rs.getInt("Zone"));
+			//utilizationModel.setPersonZone(rs.getString("PersonZone"));
+		
+		    
+			return utilizationModel;
+			
+		}
+	}
+	
 	
 	public int insertUtilization(UtilizationModel utilizationModel)
 	{
@@ -139,5 +167,25 @@ public class UtilizationRepository
 		return utilizationModel;
 	}
 
-	
+	public List<UtilizationModel> findByGradeUtilization(UtilizationModel utilizationModel) 
+	{
+	List<UtilizationModel> optional = null;
+		
+		try
+		{
+			PersonModel personModel = new PersonModel();
+			personModel.setPersonId(utilizationModel.getPersonId()); 
+			personModel = personRepository.find(personModel);
+		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized,"
+				+ " a.PersonMonth, a.PersonYear, b.Grade" + 
+				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = ?" + 
+				" GROUP BY b.Grade, a.PersonMonth, a.PersonYear" + 
+				" ORDER BY a.PersonMonth", new Object[] {personModel.getGrade() }, new GradeUtilizationRowMapper());	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return optional;
+	}
 }
