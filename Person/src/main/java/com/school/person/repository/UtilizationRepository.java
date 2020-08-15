@@ -35,6 +35,8 @@ public class UtilizationRepository
 			utilizationModel.setPersonId(rs.getString("PersonId"));
 			utilizationModel.setPersonMonth(rs.getInt("PersonMonth"));
 			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
+//			utilizationModel.setWaterUtilized(rs.getString("WaterUtilized"));
+//			utilizationModel.setElectricityUtilized(rs.getString("ElectricityUtilized"));
 			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
 			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
 			utilizationModel.setPersonZone(rs.getString("PersonZone"));

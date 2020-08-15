@@ -7,6 +7,8 @@ public class UtilizationModel
 	private int personYear;
 	private int waterUtilized;
 	private int electricityUtilized;
+//	private String waterUtilized;
+//	private String electricityUtilized;
 	private String personZone;
 	private String createDateTime;
 	private String lastModifiedDateTime;
@@ -74,6 +76,18 @@ public class UtilizationModel
 	public void setPersonZone(String personZone) {
 		this.personZone = personZone;
 	}
+//	public void setWaterUtilized(String waterUtilized) {
+//		this.waterUtilized = waterUtilized;
+//	}
+//	public void setElectricityUtilized(String electricityUtilized) {
+//		this.electricityUtilized = electricityUtilized;
+//	}
+//	public String getWaterUtilized() {
+//		return waterUtilized;
+//	}
+//	public String getElectricityUtilized() {
+//		return electricityUtilized;
+//	}
 	
 
 }
