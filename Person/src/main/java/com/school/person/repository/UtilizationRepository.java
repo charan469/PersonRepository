@@ -39,6 +39,7 @@ public class UtilizationRepository
 //			utilizationModel.setElectricityUtilized(rs.getString("ElectricityUtilized"));
 			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
 			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
+			utilizationModel.setZone(rs.getInt("Zone"));
 			utilizationModel.setPersonZone(rs.getString("PersonZone"));
 			utilizationModel.setCreateDateTime(Utility.setDateFormat(rs.getDate("CreateDateTime")));
 			utilizationModel.setLastModifiedDateTime(Utility.setDateFormat(rs.getDate("LastModifiedDateTime")));
@@ -64,9 +65,9 @@ public class UtilizationRepository
 
 //			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized,PersonZone, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
 
-			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized,PersonZone, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?)",
+			count = jdbcTemplate.update("INSERT INTO Utilization(PersonId, PersonMonth, PersonYear, WaterUtilized, ElectricityUtilized, PersonZone, Zone, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)",
 
-					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
+					new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear(), utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), utilizationModel.getZone(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -102,8 +103,8 @@ public class UtilizationRepository
 		try
 		{
 
-			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, PersonZone = ?, LastModifiedDateTime=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
-					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), Utility.getCurrentDateTime(), utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
+			count = jdbcTemplate.update("UPDATE Utilization SET WaterUtilized=?, ElectricityUtilized=?, PersonZone = ?, Zone = ?, LastModifiedDateTime=? WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", 
+					new Object[] {utilizationModel.getWaterUtilized(), utilizationModel.getElectricityUtilized(),utilizationModel.getPersonZone(), utilizationModel.getZone(), Utility.getCurrentDateTime(), utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear()});
 		}
 		catch(Exception ex)
 		{

@@ -1,0 +1,69 @@
+create table Person(
+	PersonId	   char(20) PRIMARY KEY,
+	PersonName     varchar(100),
+	PersonEmail	   varchar(200),
+	PersonPassword varchar(50),
+	Grade		   char(4),
+	PersonSection  char(2),
+	Gender		   char(10),
+	PersonStatus   char(10),
+	JobType		   char(10),
+	CreateDateTime          TIMESTAMPTZ,
+	LastModifiedDateTime    TIMESTAMPTZ
+);
+
+
+
+select * from Person
+UPDATE Person SET PersonStatus = 'ACTIVE';
+--drop table Person
+
+CREATE TABLE Utilization
+(
+	PersonId            char(20) NOT NULL,
+	PersonMonth         int  NOT NULL,
+	PersonYear          int  NOT NULL,
+	WaterUtilized       int,
+	ElectricityUtilized int,
+-- 	WaterUtilized       char(4),
+-- 	ElectricityUtilized char(4),
+	PersonZone			char(5),
+	CreateDateTime          TIMESTAMPTZ,
+	LastModifiedDateTime    TIMESTAMPTZ,
+	
+	PRIMARY KEY(PersonId,PersonMonth,PersonYear)
+);
+
+select * from Utilization
+
+INSERT INTO Utilization(PersonId,PersonMonth,PersonYear,WaterUtilized,ElectricityUtilized)
+VALUES('4vv15me042',02,2020,400,90)
+
+INSERT INTO Utilization(PersonId,PersonMonth,PersonYear,WaterUtilized,ElectricityUtilized)
+VALUES('4vv15me042',03,2020,'600','130')
+
+update Utilization set WaterUtilized = 200 WHERE PersonMonth = '03';
+update Utilization set WaterUtilized = 350 WHERE PersonMonth = '02';
+update Utilization set WaterUtilized = 400 WHERE PersonMonth = '08';
+update Utilization set WaterUtilized = 450 WHERE PersonMonth = '05';
+update Utilization set WaterUtilized = 320 WHERE PersonMonth = '04';
+
+ALTER table Utilization add column Zone int;
+--drop table Utilization
+
+CREATE TABLE Threshold
+(
+	ElecGreenMin    int,
+	ElecAmberMin	int,
+	ElecRedMin		int,
+	WaterGreenMin	int,
+	WaterAmberMin	int,
+	WaterRedMin		int
+
+);
+
+SELECT * FROM Threshold
+--DROP TABLE THRESHOLD
+
+INSERT INTO Threshold (ElecGreenMin,ElecAmberMin,ElecRedMin,WaterGreenMin,WaterAmberMin,WaterRedMin)
+VALUES(0,100,150,0,500,1000);

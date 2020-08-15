@@ -1,7 +1,5 @@
 package com.school.person.service;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,49 +22,58 @@ public class ThresholdServiceImpl implements ThresholdService {
 		String finalZone = null;
 
 		if (utilizationModel.getElectricityUtilized() < thresholdModel.getElecAmberMin()
-				&& utilizationModel.getElectricityUtilized() > thresholdModel.getElecGreenMin())
-		{
+				&& utilizationModel.getElectricityUtilized() > thresholdModel.getElecGreenMin()) {
 			elecZone = Constants.GREEN_ZONE;
-		}
-		else if (utilizationModel.getElectricityUtilized() > thresholdModel.getElecAmberMin()
-				&& utilizationModel.getElectricityUtilized() < thresholdModel.getElecRedMin())
-		{
+		} else if (utilizationModel.getElectricityUtilized() > thresholdModel.getElecAmberMin()
+				&& utilizationModel.getElectricityUtilized() < thresholdModel.getElecRedMin()) {
 			elecZone = Constants.AMBER_ZONE;
-		} 
-		else 
-		{
+		} else {
 			elecZone = Constants.RED_ZONE;
 		}
 
 		if (utilizationModel.getWaterUtilized() < thresholdModel.getWaterAmberMin()
-				&& utilizationModel.getWaterUtilized() > thresholdModel.getWaterGreenMin()) 
-		{
+				&& utilizationModel.getWaterUtilized() > thresholdModel.getWaterGreenMin()) {
 			waterZone = Constants.GREEN_ZONE;
-		}
-		else if (utilizationModel.getWaterUtilized() > thresholdModel.getWaterAmberMin()
-				&& utilizationModel.getWaterUtilized() < thresholdModel.getWaterRedMin())
-		{
+		} else if (utilizationModel.getWaterUtilized() > thresholdModel.getWaterAmberMin()
+				&& utilizationModel.getWaterUtilized() < thresholdModel.getWaterRedMin()) {
 			waterZone = Constants.AMBER_ZONE;
-		} 
-		else 
-		{
+		} else {
 			waterZone = Constants.RED_ZONE;
 		}
 
-		if (elecZone.equals(Constants.RED_ZONE) || waterZone.equals(Constants.RED_ZONE)) 
-		{
+		if (elecZone.equals(Constants.RED_ZONE) || waterZone.equals(Constants.RED_ZONE)) {
 			finalZone = Constants.RED_ZONE;
-		} 
-		else if (elecZone.equals(Constants.GREEN_ZONE) && waterZone.equals(Constants.GREEN_ZONE))
-		{
+		} else if (elecZone.equals(Constants.GREEN_ZONE) && waterZone.equals(Constants.GREEN_ZONE)) {
 			finalZone = Constants.GREEN_ZONE;
-		}
-		else
-		{
+		} else {
 			finalZone = Constants.AMBER_ZONE;
+
 		}
 
 		return finalZone;
 	}
 
+	@Override
+	public int findZone(String personZone) {
+
+		int zone = 0;
+
+		switch (personZone) {
+		
+		case Constants.RED_ZONE:
+			zone = Constants.RED_ZONE_INT;
+			break;
+
+		case Constants.AMBER_ZONE:
+			zone = Constants.AMBER_ZONE_INT;
+			break;
+
+		case Constants.GREEN_ZONE:
+			zone = Constants.GREEN_ZONE_INT;
+			break;
+
+		}
+		return zone;
+
+	}
 }

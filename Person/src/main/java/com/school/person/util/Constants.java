@@ -27,5 +27,9 @@ public class Constants
 	public static final String GREEN_ZONE = "GREEN";
 	public static final String AMBER_ZONE = "AMBER";
 	public static final String RED_ZONE = "RED";
+	public static final int GREEN_ZONE_INT = 30 ;
+	public static final int AMBER_ZONE_INT = 20 ;
+	public static final int RED_ZONE_INT = 10 ;
+	
 	
 }

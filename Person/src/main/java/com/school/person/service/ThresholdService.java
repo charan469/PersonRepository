@@ -9,4 +9,6 @@ public interface ThresholdService {
 
 	String findThreshold(UtilizationModel utilizationModel);
 
+	int findZone(String personZone);
+
 }

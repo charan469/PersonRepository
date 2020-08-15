@@ -25,15 +25,11 @@ public class UtilizationServiceImpl implements UtilizationService
 	public UtilizationModel insertUtilization(UtilizationModel utilizationModel)
 	{
 		
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		Date date = new Date(System.currentTimeMillis());
-//		System.out.println(formatter.format(date));
-//		utilizationModel.setUpdateDate(formatter.format(date));
-		
 		int count = 0;
 //		String finalZone = thresholdService.findThreshold(utilizationModel);
 //		utilizationModel.setPersonZone(finalZone);
 		utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
+		utilizationModel.setZone(thresholdService.findZone(utilizationModel.getPersonZone()));
 		count = utilizationRepository.insertUtilization(utilizationModel);
 		
 		if(count > 0)
@@ -97,6 +93,7 @@ public class UtilizationServiceImpl implements UtilizationService
 		try
 		{
 			utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
+			utilizationModel.setZone(thresholdService.findZone(utilizationModel.getPersonZone()));
 			count = utilizationRepository.updateUtilization(utilizationModel);
 			if(count > 0)
 			{

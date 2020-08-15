@@ -10,6 +10,7 @@ public class UtilizationModel
 //	private String waterUtilized;
 //	private String electricityUtilized;
 	private String personZone;
+	private int zone;
 	private String createDateTime;
 	private String lastModifiedDateTime;
 	private String status;
@@ -88,6 +89,12 @@ public class UtilizationModel
 //	public String getElectricityUtilized() {
 //		return electricityUtilized;
 //	}
+	public int getZone() {
+		return zone;
+	}
+	public void setZone(int zone) {
+		this.zone = zone;
+	}
 	
 
 }
