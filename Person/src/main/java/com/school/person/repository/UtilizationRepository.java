@@ -125,7 +125,17 @@ public class UtilizationRepository
 	
 	public UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel) 
 	{
-		return jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear() }, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class));
+	
+		
+		try
+		{
+		utilizationModel = jdbcTemplate.queryForObject("SELECT * FROM Utilization WHERE PersonId=? AND PersonMonth=? AND PersonYear=?", new Object[] {utilizationModel.getPersonId(), utilizationModel.getPersonMonth(), utilizationModel.getPersonYear() }, new BeanPropertyRowMapper<UtilizationModel>(UtilizationModel.class));	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return utilizationModel;
 	}
 
 	

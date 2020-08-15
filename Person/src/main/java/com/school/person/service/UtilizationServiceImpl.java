@@ -43,21 +43,21 @@ public class UtilizationServiceImpl implements UtilizationService
 		}
 		else if(count==-1)
 		{
-//			// In case of existing record do not give duplicate message instead override the existing record
-//			count = utilizationRepository.updateUtilization(utilizationModel);
-//			if(count > 0)
-//			{
-//				utilizationModel.setStatus(Constants.UPDATE_SUCCESS);
-//				utilizationModel.setMessage(Constants.UPDATE_SUCCESS_MSG);
-//			}
-//			else
-//			{
-//				utilizationModel.setStatus(Constants.UPDATE_FAILED);
-//				utilizationModel.setMessage(Constants.UPDATE_FAILED_MSG);
-//			}
+			// In case of existing record do not give duplicate message instead override the existing record
+			count = utilizationRepository.updateUtilization(utilizationModel);
+			if(count > 0)
+			{
+				utilizationModel.setStatus(Constants.UPDATE_SUCCESS);
+				utilizationModel.setMessage(Constants.UPDATE_SUCCESS_MSG);
+			}
+			else
+			{
+				utilizationModel.setStatus(Constants.UPDATE_FAILED);
+				utilizationModel.setMessage(Constants.UPDATE_FAILED_MSG);
+			}
 			
-			utilizationModel.setStatus(Constants.DUPLICATE);
-			utilizationModel.setMessage(Constants.UTILIZATION_DUPLICATE_MSG);
+//			utilizationModel.setStatus(Constants.DUPLICATE);
+//			utilizationModel.setMessage(Constants.UTILIZATION_DUPLICATE_MSG);
 			
 			
 		}
@@ -130,7 +130,7 @@ public class UtilizationServiceImpl implements UtilizationService
 	
 	@Override
 	public UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel)
-	{
+	{ 
 		return utilizationRepository.findByMonthYearUtilization(utilizationModel);
 	}
 
