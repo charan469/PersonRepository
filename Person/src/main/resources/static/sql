@@ -36,6 +36,8 @@ CREATE TABLE Utilization
 
 select * from Utilization
 
+select * from Utilization WHERE PersonMonth = 1
+
 INSERT INTO Utilization(PersonId,PersonMonth,PersonYear,WaterUtilized,ElectricityUtilized)
 VALUES('4vv15me042',02,2020,400,90)
 
@@ -50,11 +52,17 @@ update Utilization set WaterUtilized = 320 WHERE PersonMonth = '04';
 
 SELECT a.*, b.* FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId ORDER BY a.PersonMonth;
 
-SELECT floor (avg(a.WaterUtilized)), floor (avg(a.ElectricityUtilized)), a.PersonMonth, a.PersonYear, b.Grade  
+SELECT avg(a.WaterUtilized), avg(a.ElectricityUtilized), a.PersonMonth, a.PersonYear, b.Grade  
 FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = 'GR12'
 GROUP BY b.Grade, a.PersonMonth, a.PersonYear
 ORDER BY a.PersonMonth;
 
+
+
+SELECT FLOOR (avg(WaterUtilized)), FLOOR (avg(ElectricityUtilized)), PersonMonth, PersonYear  
+FROM Utilization
+GROUP BY PersonMonth, PersonYear 
+ORDER BY PersonMonth;
 
 
 --ALTER table Utilization
