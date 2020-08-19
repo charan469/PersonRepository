@@ -70,4 +70,9 @@ public class UtilizationController
 	public List<UtilizationModel> findByGradeUtilization(@RequestBody final UtilizationModel utilizationModel) {
 		return utilizationService.findByGradeUtilization(utilizationModel);
 	}
+	
+	@PostMapping(path="/findTotalUtilization")
+	public List<UtilizationModel> findTotalUtilization(@RequestBody final UtilizationModel utilizationModel) {
+		return utilizationService.findTotalUtilization(utilizationModel);
+	}
 }

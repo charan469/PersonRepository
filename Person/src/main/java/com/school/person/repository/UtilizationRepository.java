@@ -76,6 +76,27 @@ public class UtilizationRepository
 		}
 	}
 	
+	public class TotalUtilizationRowMapper implements RowMapper<UtilizationModel>
+	{
+		@Override
+		public UtilizationModel mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			//DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			UtilizationModel utilizationModel = new UtilizationModel();
+			
+			
+			utilizationModel.setPersonMonth(rs.getInt("PersonMonth"));
+			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
+			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
+			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
+			//utilizationModel.setZone(rs.getInt("Zone"));
+			//utilizationModel.setPersonZone(rs.getString("PersonZone"));
+		
+		    
+			return utilizationModel;
+			
+		}
+	}
 	
 	public int insertUtilization(UtilizationModel utilizationModel)
 	{
@@ -176,11 +197,33 @@ public class UtilizationRepository
 			PersonModel personModel = new PersonModel();
 			personModel.setPersonId(utilizationModel.getPersonId()); 
 			personModel = personRepository.find(personModel);
-		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized,"
+		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
 				+ " a.PersonMonth, a.PersonYear, b.Grade" + 
 				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = ?" + 
 				" GROUP BY b.Grade, a.PersonMonth, a.PersonYear" + 
 				" ORDER BY a.PersonMonth", new Object[] {personModel.getGrade() }, new GradeUtilizationRowMapper());	
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		return optional;
+	}
+	
+	public List<UtilizationModel> findTotalUtilization(UtilizationModel utilizationModel) 
+	{
+	List<UtilizationModel> optional = null;
+		
+		try
+		{
+			PersonModel personModel = new PersonModel();
+			personModel.setPersonId(utilizationModel.getPersonId()); 
+			personModel = personRepository.find(personModel);
+		optional = jdbcTemplate.query("SELECT floor(avg(WaterUtilized)) as WaterUtilized, floor(avg(ElectricityUtilized)) as ElectricityUtilized, "
+				+ " PersonMonth, PersonYear " + 
+				" FROM Utilization "+ 
+				" GROUP BY PersonMonth, PersonYear" + 
+				" ORDER BY PersonMonth", new TotalUtilizationRowMapper());	
 		}
 		catch(Exception ex)
 		{

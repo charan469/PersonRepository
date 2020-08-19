@@ -22,5 +22,7 @@ public interface UtilizationService
 
 	List<UtilizationModel> findByGradeUtilization(UtilizationModel utilizationModel);
 
+	List<UtilizationModel> findTotalUtilization(UtilizationModel utilizationModel);
+
 }
 
