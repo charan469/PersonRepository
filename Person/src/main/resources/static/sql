@@ -28,6 +28,7 @@ CREATE TABLE Utilization
 -- 	WaterUtilized       char(4),
 -- 	ElectricityUtilized char(4),
 	PersonZone			char(5),
+	Zone 				int,
 	CreateDateTime          TIMESTAMPTZ,
 	LastModifiedDateTime    TIMESTAMPTZ,
 	
