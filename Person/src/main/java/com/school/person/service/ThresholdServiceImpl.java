@@ -21,21 +21,21 @@ public class ThresholdServiceImpl implements ThresholdService {
 		String waterZone = null;
 		String finalZone = null;
 
-		if (utilizationModel.getElectricityUtilized() < thresholdModel.getElecAmberMin()
-				&& utilizationModel.getElectricityUtilized() > thresholdModel.getElecGreenMin()) {
+		if (utilizationModel.getElectricityUtilized() <= thresholdModel.getElecAmberMin()
+				&& utilizationModel.getElectricityUtilized() >= thresholdModel.getElecGreenMin()) {
 			elecZone = Constants.GREEN_ZONE;
-		} else if (utilizationModel.getElectricityUtilized() > thresholdModel.getElecAmberMin()
-				&& utilizationModel.getElectricityUtilized() < thresholdModel.getElecRedMin()) {
+		} else if (utilizationModel.getElectricityUtilized() >= thresholdModel.getElecAmberMin()
+				&& utilizationModel.getElectricityUtilized() <= thresholdModel.getElecRedMin()) {
 			elecZone = Constants.AMBER_ZONE;
 		} else {
 			elecZone = Constants.RED_ZONE;
 		}
 
-		if (utilizationModel.getWaterUtilized() < thresholdModel.getWaterAmberMin()
-				&& utilizationModel.getWaterUtilized() > thresholdModel.getWaterGreenMin()) {
+		if (utilizationModel.getWaterUtilized() <= thresholdModel.getWaterAmberMin()
+				&& utilizationModel.getWaterUtilized() >= thresholdModel.getWaterGreenMin()) {
 			waterZone = Constants.GREEN_ZONE;
-		} else if (utilizationModel.getWaterUtilized() > thresholdModel.getWaterAmberMin()
-				&& utilizationModel.getWaterUtilized() < thresholdModel.getWaterRedMin()) {
+		} else if (utilizationModel.getWaterUtilized() >= thresholdModel.getWaterAmberMin()
+				&& utilizationModel.getWaterUtilized() <= thresholdModel.getWaterRedMin()) {
 			waterZone = Constants.AMBER_ZONE;
 		} else {
 			waterZone = Constants.RED_ZONE;
