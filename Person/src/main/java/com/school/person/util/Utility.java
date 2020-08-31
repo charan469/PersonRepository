@@ -454,4 +454,11 @@ public class Utility {
 		
 	}
 	
+	public final static String getCurrentYear(){
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
+		String currentYear = formatter.format(new Date(System.currentTimeMillis()));
+		return currentYear ;
+		
+	}
 }

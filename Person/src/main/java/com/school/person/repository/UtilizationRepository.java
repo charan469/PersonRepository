@@ -170,7 +170,7 @@ public class UtilizationRepository
 
 	public List<UtilizationModel> getAll(UtilizationModel utilizationModel) 
 	{
-		return jdbcTemplate.query("SELECT * FROM Utilization WHERE PersonId=? ORDER BY PersonMonth ASC ", new Object[] {utilizationModel.getPersonId()}, new UtilizationRowMapper());
+		return jdbcTemplate.query("SELECT * FROM Utilization WHERE PersonId=? and PersonYear = ? ORDER BY PersonMonth ASC ", new Object[] {utilizationModel.getPersonId(), Utility.getCurrentYear()}, new UtilizationRowMapper());
 	}
 	
 	public UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel) 
@@ -199,9 +199,9 @@ public class UtilizationRepository
 			personModel = personRepository.find(personModel);
 		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
 				+ " a.PersonMonth, a.PersonYear, b.Grade" + 
-				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = ?" + 
+				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = ? and a.PersonYear= ? " + 
 				" GROUP BY b.Grade, a.PersonMonth, a.PersonYear" + 
-				" ORDER BY a.PersonMonth", new Object[] {personModel.getGrade() }, new GradeUtilizationRowMapper());	
+				" ORDER BY a.PersonMonth", new Object[] {personModel.getGrade(),Utility.getCurrentYear() }, new GradeUtilizationRowMapper());	
 		}
 		catch(Exception ex)
 		{
@@ -221,9 +221,9 @@ public class UtilizationRepository
 			personModel = personRepository.find(personModel);
 		optional = jdbcTemplate.query("SELECT floor(avg(WaterUtilized)) as WaterUtilized, floor(avg(ElectricityUtilized)) as ElectricityUtilized, "
 				+ " PersonMonth, PersonYear " + 
-				" FROM Utilization "+ 
+				" FROM Utilization WHERE PersonYear = ? "+ 
 				" GROUP BY PersonMonth, PersonYear" + 
-				" ORDER BY PersonMonth", new TotalUtilizationRowMapper());	
+				" ORDER BY PersonMonth", new Object[] {Utility.getCurrentYear() }, new TotalUtilizationRowMapper());	
 		}
 		catch(Exception ex)
 		{
