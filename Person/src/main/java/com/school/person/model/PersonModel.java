@@ -6,6 +6,7 @@ public class PersonModel
 	private String personName;
 	private String personEmail;
 	private String personPassword;
+	private String schoolId;
 	private String grade;
 	private String personSection;
 	private String gender;
@@ -96,6 +97,11 @@ public class PersonModel
 		this.message = message;
 	}
 	
-	
+	public String getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
+	}
 
 }

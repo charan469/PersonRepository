@@ -37,6 +37,7 @@ public class PersonRepository
 			personModel.setPersonName(rs.getString("PersonName"));
 			personModel.setPersonEmail(rs.getString("PersonEmail"));
 			personModel.setPersonPassword(rs.getString("PersonPassword"));
+			personModel.setSchoolId(rs.getString("SchoolId"));
 			personModel.setGrade(rs.getString("Grade"));
 			personModel.setPersonSection(rs.getString("PersonSection"));
 			personModel.setGender(rs.getString("Gender"));
@@ -65,8 +66,8 @@ public class PersonRepository
 			//Date lastModifiedDateTime = new Date(System.currentTimeMillis());
 			//System.out.println(formatter.format(lastModifiedDateTime));
 			
-			count = jdbcTemplate.update("INSERT INTO Person(PersonId, PersonName, PersonEmail, PersonPassword, Grade, PersonSection, Gender, PersonStatus, JobType, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
+			count = jdbcTemplate.update("INSERT INTO Person(PersonId, PersonName, PersonEmail, PersonPassword, SchoolId, Grade, PersonSection, Gender, PersonStatus, JobType, CreateDateTime, LastModifiedDateTime) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )",
+					new Object[] {personModel.getPersonId(), personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getSchoolId(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), Utility.getCurrentDateTime()});
 		}
 		catch(DuplicateKeyException dke)
 		{
@@ -112,8 +113,8 @@ public class PersonRepository
 			//Date lastModifiedDateTime = new Date(System.currentTimeMillis());
 			///System.out.println(formatter.format(lastModifiedDateTime));
 			
-			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=?, LastModifiedDateTime=? WHERE PersonId=?", 
-					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), personModel.getPersonId()});
+			count = jdbcTemplate.update("UPDATE Person  SET PersonName=?, PersonEmail=?, PersonPassword=?, SchoolId=?, Grade=?, PersonSection=?, Gender=?, PersonStatus=?, JobType=?, LastModifiedDateTime=? WHERE PersonId=?", 
+					new Object[] {personModel.getPersonName(), personModel.getPersonEmail(), personModel.getPersonPassword(), personModel.getSchoolId(), personModel.getGrade(), personModel.getPersonSection(), personModel.getGender(), personModel.getPersonStatus(), personModel.getJobType(), Utility.getCurrentDateTime(), personModel.getPersonId()});
 		}
 		catch(Exception ex)
 		{

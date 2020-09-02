@@ -454,10 +454,10 @@ public class Utility {
 		
 	}
 	
-	public final static String getCurrentYear(){
+	public final static int getCurrentYear(){
 		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy");
-		String currentYear = formatter.format(new Date(System.currentTimeMillis()));
+		int currentYear = Integer.parseInt(formatter.format(new Date(System.currentTimeMillis())));
 		return currentYear ;
 		
 	}

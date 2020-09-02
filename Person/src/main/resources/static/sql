@@ -3,6 +3,7 @@ create table Person(
 	PersonName     varchar(100),
 	PersonEmail	   varchar(200),
 	PersonPassword varchar(50),
+	SchoolId        char(5),
 	Grade		   char(4),
 	PersonSection  char(2),
 	Gender		   char(10),
@@ -12,7 +13,7 @@ create table Person(
 	LastModifiedDateTime    TIMESTAMPTZ
 );
 
-
+alter table Person add SchoolId char(5);
 
 select * from Person
 UPDATE Person SET PersonStatus = 'ACTIVE';
@@ -58,6 +59,12 @@ FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade =
 GROUP BY b.Grade, a.PersonMonth, a.PersonYear
 ORDER BY a.PersonMonth;
 
+SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, 
+floor(avg(a.ElectricityUtilized)) as ElectricityUtilized,  a.PersonMonth, a.PersonYear, b.Grade 
+FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId 
+WHERE b.Grade = 'GR12' and a.PersonYear= '2020' GROUP BY b.Grade, a.PersonMonth, a.PersonYear 
+ORDER BY a.PersonMonth;
+
 
 
 SELECT FLOOR (avg(WaterUtilized)), FLOOR (avg(ElectricityUtilized)), PersonMonth, PersonYear  
@@ -85,3 +92,81 @@ SELECT * FROM Threshold
 
 INSERT INTO Threshold (ElecGreenMin,ElecAmberMin,ElecRedMin,WaterGreenMin,WaterAmberMin,WaterRedMin)
 VALUES(0,100,150,0,500,1000);
+CREATE TABLE School
+(   SchoolId char(5),    
+	SchoolName varchar(100) 
+);
+select * from School order by SchoolId asc;
+INSERT INTO School (SchoolId,SchoolName)
+VALUES('12345','chaitanya');
+INSERT INTO School (SchoolId,SchoolName)
+VALUES('0','Select School');
+
+
+CREATE TABLE Grade
+(   GradeKey char(5),    
+	GradeName varchar(15) 
+);
+select * from Grade;
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('0','Select Grade');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('KG1','KG1');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('KG2','KG2');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR1','GR1');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR2','GR2');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR3','GR3');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR4','GR4');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR5','GR5');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR6','GR6');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR7','GR7');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR8','GR8');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR9','GR9');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR10','GR10');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR11','GR11');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('GR12','GR12');
+--DROP TABLE Grade
+
+
+
+CREATE TABLE PersonSection
+(   SectionKey char(5),    
+	SectionName varchar(15) 
+);
+select * from PersonSection order by SectionKey asc;
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('0','Select Section');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('A','A');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('AA','AA');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('B','B');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('C','C');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('D','D');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('E','E');
+
+
+CREATE TABLE Gender
+(    char(5),    
+	 varchar(100) 
+);
+select * from Gender order by SchoolId asc;
+INSERT INTO Gender (SchoolId,SchoolName)
+VALUES('12345','chaitanya');
