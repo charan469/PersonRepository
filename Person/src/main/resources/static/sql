@@ -1,19 +1,20 @@
 create table Person(
-	PersonId	   char(20) PRIMARY KEY,
+	PersonId	   varchar(20) PRIMARY KEY,
 	PersonName     varchar(100),
 	PersonEmail	   varchar(200),
 	PersonPassword varchar(50),
-	SchoolId        char(5),
-	Grade		   char(4),
-	PersonSection  char(2),
-	Gender		   char(10),
-	PersonStatus   char(10),
-	JobType		   char(10),
+	SchoolId        varchar(5),
+	Grade		   varchar(4),
+	PersonSection  varchar(5),
+	Gender		   varchar(10),
+	PersonStatus   varchar(10),
+	JobType		   varchar(10),
 	CreateDateTime          TIMESTAMPTZ,
 	LastModifiedDateTime    TIMESTAMPTZ
 );
 
-alter table Person add SchoolId char(5);
+--alter table Person add SchoolId char(5);
+
 
 select * from Person
 UPDATE Person SET PersonStatus = 'ACTIVE';
@@ -21,14 +22,12 @@ UPDATE Person SET PersonStatus = 'ACTIVE';
 
 CREATE TABLE Utilization
 (
-	PersonId            char(20) NOT NULL,
+	PersonId            varchar(20) NOT NULL,
 	PersonMonth         int  NOT NULL,
 	PersonYear          int  NOT NULL,
 	WaterUtilized       int,
 	ElectricityUtilized int,
--- 	WaterUtilized       char(4),
--- 	ElectricityUtilized char(4),
-	PersonZone			char(5),
+	PersonZone			varchar(5),
 	Zone 				int,
 	CreateDateTime          TIMESTAMPTZ,
 	LastModifiedDateTime    TIMESTAMPTZ,
@@ -92,24 +91,30 @@ SELECT * FROM Threshold
 
 INSERT INTO Threshold (ElecGreenMin,ElecAmberMin,ElecRedMin,WaterGreenMin,WaterAmberMin,WaterRedMin)
 VALUES(0,100,150,0,500,1000);
+
+
 CREATE TABLE School
-(   SchoolId char(5),    
+(   SchoolId varchar(5),    
 	SchoolName varchar(100) 
 );
 select * from School order by SchoolId asc;
 INSERT INTO School (SchoolId,SchoolName)
-VALUES('12345','chaitanya');
+VALUES('SCTS','Chaitanya');
+INSERT INTO School (SchoolId,SchoolName)
+VALUES('NETS','Narayana');
 INSERT INTO School (SchoolId,SchoolName)
 VALUES('0','Select School');
-
+--drop table School
 
 CREATE TABLE Grade
-(   GradeKey char(5),    
+(   GradeKey varchar(5),    
 	GradeName varchar(15) 
 );
 select * from Grade;
 INSERT INTO Grade (GradeKey,GradeName)
 VALUES('0','Select Grade');
+INSERT INTO Grade (GradeKey,GradeName)
+VALUES('N.A','N.A');
 INSERT INTO Grade (GradeKey,GradeName)
 VALUES('KG1','KG1');
 INSERT INTO Grade (GradeKey,GradeName)
@@ -143,12 +148,14 @@ VALUES('GR12','GR12');
 
 
 CREATE TABLE PersonSection
-(   SectionKey char(5),    
+(   SectionKey varchar(5),    
 	SectionName varchar(15) 
 );
-select * from PersonSection order by SectionKey asc;
+select * from PersonSection;
 INSERT INTO PersonSection (SectionKey,SectionName)
 VALUES('0','Select Section');
+INSERT INTO PersonSection (SectionKey,SectionName)
+VALUES('N.A','N.A');
 INSERT INTO PersonSection (SectionKey,SectionName)
 VALUES('A','A');
 INSERT INTO PersonSection (SectionKey,SectionName)
@@ -161,12 +168,17 @@ INSERT INTO PersonSection (SectionKey,SectionName)
 VALUES('D','D');
 INSERT INTO PersonSection (SectionKey,SectionName)
 VALUES('E','E');
+--drop table PersonSection
 
-
-CREATE TABLE Gender
-(    char(5),    
-	 varchar(100) 
+CREATE TABLE JobType
+(   JobKey varchar(10),    
+	 JobName varchar(15) 
 );
-select * from Gender order by SchoolId asc;
-INSERT INTO Gender (SchoolId,SchoolName)
-VALUES('12345','chaitanya');
+select * from JobType order by JobKey asc;
+INSERT INTO JobType (JobKey,JobName)
+VALUES('0','Select Job Type');
+INSERT INTO JobType (JobKey,JobName)
+VALUES('Student','Student');
+INSERT INTO JobType (JobKey,JobName)
+VALUES('Teacher','Teacher');
+--drop table JobType

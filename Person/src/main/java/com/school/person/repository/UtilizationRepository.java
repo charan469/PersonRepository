@@ -198,10 +198,10 @@ public class UtilizationRepository
 			personModel.setPersonId(utilizationModel.getPersonId()); 
 			personModel = personRepository.find(personModel);
 		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
-				+ " a.PersonMonth, a.PersonYear, b.Grade" + 
-				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.Grade = ? and a.PersonYear= ? " + 
-				" GROUP BY b.Grade, a.PersonMonth, a.PersonYear" + 
-				" ORDER BY a.PersonMonth", new Object[] {personModel.getGrade(),Utility.getCurrentYear() }, new GradeUtilizationRowMapper());	
+				+ " a.PersonMonth, a.PersonYear, b.Grade, b.SchoolId " + 
+				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.SchoolId = ? and b.Grade = ? and a.PersonYear= ? " + 
+				" GROUP BY b.SchoolId, b.Grade, a.PersonMonth, a.PersonYear" + 
+				" ORDER BY a.PersonMonth", new Object[] {personModel.getSchoolId(), personModel.getGrade(),Utility.getCurrentYear() }, new GradeUtilizationRowMapper());	
 		}
 		catch(Exception ex)
 		{
@@ -219,12 +219,12 @@ public class UtilizationRepository
 			PersonModel personModel = new PersonModel();
 			personModel.setPersonId(utilizationModel.getPersonId()); 
 			personModel = personRepository.find(personModel);
-		optional = jdbcTemplate.query("SELECT floor(avg(WaterUtilized)) as WaterUtilized, floor(avg(ElectricityUtilized)) as ElectricityUtilized, "
-				+ " PersonMonth, PersonYear " + 
-				" FROM Utilization WHERE PersonYear = ? "+ 
-				" GROUP BY PersonMonth, PersonYear" + 
-				" ORDER BY PersonMonth", new Object[] {Utility.getCurrentYear() }, new TotalUtilizationRowMapper());	
+		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
+				+ " a.PersonMonth, a.PersonYear, b.SchoolId  FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.SchoolId = ? and a.PersonYear= ? " + 
+				" GROUP BY b.SchoolId, a.PersonMonth, a.PersonYear " + 
+				" ORDER BY a.PersonMonth", new Object[] {personModel.getSchoolId(), Utility.getCurrentYear() }, new TotalUtilizationRowMapper());	
 		}
+		
 		catch(Exception ex)
 		{
 			ex.printStackTrace();

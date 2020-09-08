@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.school.person.model.GradeModel;
+import com.school.person.model.JobTypeModel;
 import com.school.person.model.PersonModel;
 import com.school.person.model.SchoolModel;
 import com.school.person.model.SectionModel;
@@ -68,6 +69,22 @@ public class ModelRepository {
 		}
 	}
 	
+	class JobTypeRowMapper implements RowMapper<JobTypeModel>
+	{
+		@Override
+		public JobTypeModel mapRow(ResultSet rs, int rowNum) throws SQLException
+		{
+			JobTypeModel jobTypeModel = new JobTypeModel();
+			
+			jobTypeModel.setJobKey(rs.getString("JobKey"));
+			jobTypeModel.setJobName(rs.getString("JobName"));
+			
+			
+			return jobTypeModel;
+			
+		}
+	}
+	
 	
 
 	public List<SchoolModel> getSchool() 
@@ -77,12 +94,17 @@ public class ModelRepository {
 	
 	public List<SectionModel> getSection() 
 	{
-		return jdbcTemplate.query("SELECT SectionKey, SectionName FROM PersonSection ORDER BY SectionKey ASC", new SectionRowMapper());
+		return jdbcTemplate.query("SELECT SectionKey, SectionName FROM PersonSection", new SectionRowMapper());
 	}
 	
 	public List<GradeModel> getGrade() 
 	{
 		return jdbcTemplate.query("SELECT GradeKey, GradeName FROM Grade", new GradeRowMapper());
+	}
+
+	public List<JobTypeModel> getJob() {
+		
+		return jdbcTemplate.query("Select JobKey, JobName FROM JobType", new  JobTypeRowMapper());
 	}
 	
 	

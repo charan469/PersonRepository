@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.person.model.GradeModel;
+import com.school.person.model.JobTypeModel;
 import com.school.person.model.SchoolModel;
 import com.school.person.model.SectionModel;
 import com.school.person.service.ModelService;
@@ -40,5 +41,10 @@ public class MasterController {
     	return modelService.getGrade();
     }
 
+	@GetMapping(path="/getJob")
+	public List<JobTypeModel> getJob()
+    {
+    	return modelService.getJob();
+    }
 	
 }

@@ -11,4 +11,6 @@ public interface ThresholdService {
 
 	int findZone(String personZone);
 
+	String findColour(String personZone);
+
 }

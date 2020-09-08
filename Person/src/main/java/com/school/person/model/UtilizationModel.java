@@ -11,6 +11,7 @@ public class UtilizationModel
 //	private String electricityUtilized;
 	private String personZone;
 	private int zone;
+	private String colour;
 	private String createDateTime;
 	private String lastModifiedDateTime;
 	private String status;
@@ -94,6 +95,12 @@ public class UtilizationModel
 	}
 	public void setZone(int zone) {
 		this.zone = zone;
+	}
+	public String getColour() {
+		return colour;
+	}
+	public void setColour(String colour) {
+		this.colour = colour;
 	}
 	
 

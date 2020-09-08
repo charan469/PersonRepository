@@ -76,4 +76,28 @@ public class ThresholdServiceImpl implements ThresholdService {
 		return zone;
 
 	}
+	
+	@Override
+	public String findColour(String personZone) {
+
+		String colour = null;
+
+		switch (personZone) {
+		
+		case Constants.RED_ZONE:
+			colour = Constants.RED_COLOUR;
+			break;
+
+		case Constants.AMBER_ZONE:
+			colour = Constants.AMBER_COLOUR;
+			break;
+
+		case Constants.GREEN_ZONE:
+			colour = Constants.GREEN_COLOUR;
+			break;
+
+		}
+		return colour;
+
+	}
 }

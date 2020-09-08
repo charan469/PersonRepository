@@ -30,6 +30,7 @@ public class UtilizationServiceImpl implements UtilizationService
 //		utilizationModel.setPersonZone(finalZone);
 		utilizationModel.setPersonZone(thresholdService.findThreshold(utilizationModel));
 		utilizationModel.setZone(thresholdService.findZone(utilizationModel.getPersonZone()));
+		utilizationModel.setColour(thresholdService.findColour(utilizationModel.getPersonZone()));
 		count = utilizationRepository.insertUtilization(utilizationModel);
 		
 		if(count > 0)
@@ -122,7 +123,12 @@ public class UtilizationServiceImpl implements UtilizationService
 	@Override
 	public List<UtilizationModel> getAll(UtilizationModel utilizationModel)
 	{
-		return utilizationRepository.getAll(utilizationModel);
+		List<UtilizationModel> optional = utilizationRepository.getAll(utilizationModel);
+		for(int i = 0; i <=optional.size()-1; i++) {
+			optional.get(i).setColour(thresholdService.findColour(optional.get(i).getPersonZone()));
+		}
+		return optional;
+		
 	}
 	
 	@Override
@@ -138,6 +144,7 @@ public class UtilizationServiceImpl implements UtilizationService
 			optional.get(i).setPersonZone(thresholdService.findThreshold(optional.get(i)));
 					
 			optional.get(i).setZone(thresholdService.findZone(optional.get(i).getPersonZone()));
+			optional.get(i).setColour(thresholdService.findColour(optional.get(i).getPersonZone()));
 		}
 		
 		
@@ -152,6 +159,7 @@ public class UtilizationServiceImpl implements UtilizationService
 			optional.get(i).setPersonZone(thresholdService.findThreshold(optional.get(i)));
 					
 			optional.get(i).setZone(thresholdService.findZone(optional.get(i).getPersonZone()));
+			optional.get(i).setColour(thresholdService.findColour(optional.get(i).getPersonZone()));
 		}
 		
 		

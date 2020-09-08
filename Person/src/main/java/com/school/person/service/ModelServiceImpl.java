@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.school.person.model.GradeModel;
+import com.school.person.model.JobTypeModel;
 import com.school.person.model.PersonModel;
 import com.school.person.model.SchoolModel;
 import com.school.person.model.SectionModel;
@@ -35,4 +36,10 @@ public class ModelServiceImpl implements ModelService {
 
 	}
 	
+	
+	@Override
+	public List<JobTypeModel> getJob() {
+		return modelRepository.getJob();
+
+	}
 }
