@@ -16,6 +16,8 @@ public class UtilizationModel
 	private String lastModifiedDateTime;
 	private String status;
 	private String message;
+	private String grade;
+	private String schoolId;
 	
 	
 	public String getPersonId() {
@@ -101,6 +103,18 @@ public class UtilizationModel
 	}
 	public void setColour(String colour) {
 		this.colour = colour;
+	}
+	public String getGrade() {
+		return grade;
+	}
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+	public String getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(String schoolId) {
+		this.schoolId = schoolId;
 	}
 	
 

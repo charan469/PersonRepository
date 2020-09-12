@@ -67,6 +67,8 @@ public class UtilizationRepository
 			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
 			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
 			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
+			utilizationModel.setGrade(rs.getString("Grade"));
+			utilizationModel.setSchoolId(rs.getString("SchoolId"));
 			//utilizationModel.setZone(rs.getInt("Zone"));
 			//utilizationModel.setPersonZone(rs.getString("PersonZone"));
 		
@@ -89,6 +91,7 @@ public class UtilizationRepository
 			utilizationModel.setPersonYear(rs.getInt("PersonYear"));
 			utilizationModel.setWaterUtilized(rs.getInt("WaterUtilized"));
 			utilizationModel.setElectricityUtilized(rs.getInt("ElectricityUtilized"));
+			utilizationModel.setSchoolId(rs.getString("SchoolId"));
 			//utilizationModel.setZone(rs.getInt("Zone"));
 			//utilizationModel.setPersonZone(rs.getString("PersonZone"));
 		
@@ -172,6 +175,8 @@ public class UtilizationRepository
 	{
 		return jdbcTemplate.query("SELECT * FROM Utilization WHERE PersonId=? and PersonYear = ? ORDER BY PersonMonth ASC ", new Object[] {utilizationModel.getPersonId(), Utility.getCurrentYear()}, new UtilizationRowMapper());
 	}
+
+	
 	
 	public UtilizationModel findByMonthYearUtilization(UtilizationModel utilizationModel) 
 	{
@@ -197,12 +202,18 @@ public class UtilizationRepository
 			PersonModel personModel = new PersonModel();
 			personModel.setPersonId(utilizationModel.getPersonId()); 
 			personModel = personRepository.find(personModel);
+			if(!Utility.isEmpty(utilizationModel.getGrade()))
+			{
+				personModel.setGrade(utilizationModel.getGrade());
+				
+			}
 		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
-				+ " a.PersonMonth, a.PersonYear, b.Grade, b.SchoolId " + 
+				+ " a.PersonMonth, a.PersonYear, b.Grade as Grade, b.SchoolId as SchoolId " + 
 				" FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.SchoolId = ? and b.Grade = ? and a.PersonYear= ? " + 
 				" GROUP BY b.SchoolId, b.Grade, a.PersonMonth, a.PersonYear" + 
 				" ORDER BY a.PersonMonth", new Object[] {personModel.getSchoolId(), personModel.getGrade(),Utility.getCurrentYear() }, new GradeUtilizationRowMapper());	
 		}
+			
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
@@ -220,7 +231,7 @@ public class UtilizationRepository
 			personModel.setPersonId(utilizationModel.getPersonId()); 
 			personModel = personRepository.find(personModel);
 		optional = jdbcTemplate.query("SELECT floor(avg(a.WaterUtilized)) as WaterUtilized, floor(avg(a.ElectricityUtilized)) as ElectricityUtilized, "
-				+ " a.PersonMonth, a.PersonYear, b.SchoolId  FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.SchoolId = ? and a.PersonYear= ? " + 
+				+ " a.PersonMonth, a.PersonYear, b.SchoolId as SchoolId  FROM Utilization a LEFT JOIN Person b ON a.PersonId = b.PersonId WHERE b.SchoolId = ? and a.PersonYear= ? " + 
 				" GROUP BY b.SchoolId, a.PersonMonth, a.PersonYear " + 
 				" ORDER BY a.PersonMonth", new Object[] {personModel.getSchoolId(), Utility.getCurrentYear() }, new TotalUtilizationRowMapper());	
 		}
